@@ -58,6 +58,11 @@ class Box
     return false;
   }
 
+  calColor()
+  {
+    
+  }
+
   // Drawing the box
   display()
   {
@@ -91,6 +96,13 @@ class BoxText extends Box
     this.size=size;
     this.text=text;
     this.color=color;
+
+    this.createTime=new Date();    
+  }
+
+  calColor()
+  {
+    
   }
 
   display()
@@ -115,9 +127,42 @@ class BoxSec extends BoxText
 {
   constructor(x, y, text)
   {
-    let size=24;
+    let size=50;
 
     super(x,y,text,size,color(0,255,0));
+  }
+
+  calColor()
+  {
+    var diff=new Date()-this.createTime;
+    var newValue=-0.00425*diff+255;
+    if(newValue<0)
+      newValue=0;
+    if(newValue>255)
+      newValue=255;  
+
+    this.color=color(0,newValue,0);
+  }
+
+  done()
+  {
+    
+    // Let's find the screen position of the particle
+    let pos = scaleToPixels(this.body.GetPosition());
+    // Is it off the bottom of the screen?
+    if (pos.y > height + this.w * this.h) {
+      this.killBody();
+      return true;
+    }
+
+    var diff=new Date()-this.createTime;
+    if(diff > 60*1000)
+    {
+      this.killBody();
+      return true;
+    }
+
+    return false;
   }
 }
 
@@ -125,9 +170,42 @@ class BoxMin extends BoxText
 {
   constructor(x, y, text)
   {
-    let size=48;
+    let size=100;
 
     super(x,y,text,size,color(255,0,0));
+  }
+
+  calColor()
+  {
+    var diff=new Date()-this.createTime;
+    var newValue=-0.00105*diff+255;
+    if(newValue<0)
+      newValue=0;
+    if(newValue>255)
+      newValue=255;  
+
+    this.color=color(newValue,0,0);
+  }
+
+  done()
+  {
+    
+    // Let's find the screen position of the particle
+    let pos = scaleToPixels(this.body.GetPosition());
+    // Is it off the bottom of the screen?
+    if (pos.y > height + this.w * this.h) {
+      this.killBody();
+      return true;
+    }
+
+    var diff=new Date()-this.createTime;
+    if(diff > 3*60*1000)
+    {
+      this.killBody();
+      return true;
+    }
+
+    return false;
   }
 }
 
@@ -135,8 +213,29 @@ class BoxStu extends BoxText
 {
   constructor(x, y, text)
   {
-    let size=72;
+    let size=150;
 
     super(x,y,text,size,color(0,0,255));
+  }
+
+  done()
+  {
+    
+    // Let's find the screen position of the particle
+    let pos = scaleToPixels(this.body.GetPosition());
+    // Is it off the bottom of the screen?
+    if (pos.y > height + this.w * this.h) {
+      this.killBody();
+      return true;
+    }
+
+    var diff=new Date()-this.createTime;
+    if(diff > 60*60*1000)
+    {
+      this.killBody();
+      return true;
+    }
+
+    return false;
   }
 }
