@@ -21,13 +21,16 @@ function setup()
 
   // Initialize box2d physics and create the world
   world = createWorld();
-
-  // Add a bunch of fixed boundaries
-  boundaries.push(new Boundary(width / 4, height - 5, width / 2, 10));
-  boundaries.push(new Boundary(3 * width / 4, height - 50, width / 2, 10));
-
-  //let b = new Box(width / 2, 30);
-  //boxes.push(b);
+  
+  //Kasten rundherum
+  //unten
+  boundaries.push(new Boundary(0, height - 5, width*2, 5));
+  //oben
+  boundaries.push(new Boundary(0,5, width*2, 5));
+  //links
+  boundaries.push(new Boundary(5,height, 5, height*2));
+  //rechts
+  boundaries.push(new Boundary(width-5,height, 5, height*2));
 }
 
 function draw()
@@ -68,17 +71,20 @@ function draw()
         boxes.push(b);
     }
     OldMinuten=Minuten;
-    OldSekunden=Sekunden;
+    OldSekunden=Sekunden;    
     timer = millis();
   }
 
   // Display all the boundaries
-  for (let i = 0; i < boundaries.length; i++) {
+  for (let i = 0; i < boundaries.length; i++)
+  {
     boundaries[i].display();
   }
 
   // Display all the boxes
-  for (let i = boxes.length - 1; i >= 0; i--) {
+  for (let i = boxes.length - 1; i >= 0; i--)
+  {
+    boxes[i].calColor();
     boxes[i].display();
     if (boxes[i].done()) {
       boxes.splice(i, 1);
